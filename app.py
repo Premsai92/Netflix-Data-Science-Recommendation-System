@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Load dataset
-df = pd.read_csv("/content/netflix_titles.csv")
+df = pd.read_csv("netflix_titles.csv")
 
 # Fill missing values
 df["director"] = df["director"].fillna("")
