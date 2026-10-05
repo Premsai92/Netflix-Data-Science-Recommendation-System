@@ -38,19 +38,16 @@ indices = pd.Series(
 def recommend(title):
     idx = indices[title]
 
-    similarity_scores = list(enumerate(similarity[idx]))
+    similarity_scores = cosine_similarity(
+        tfidf_matrix[idx],
+        tfidf_matrix
+    ).flatten()
 
-    similarity_scores = sorted(
-        similarity_scores,
-        key=lambda x: x[1],
-        reverse=True
-    )
+    similar_indices = similarity_scores.argsort()[-11:][::-1]
 
-    similarity_scores = similarity_scores[1:11]
+    similar_indices = similar_indices[similar_indices != idx][:10]
 
-    movie_indices = [i[0] for i in similarity_scores]
-
-    return df["title"].iloc[movie_indices].tolist()
+    return df["title"].iloc[similar_indices].tolist()
 
 
 # -------------------------
